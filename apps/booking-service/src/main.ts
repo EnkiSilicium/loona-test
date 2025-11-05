@@ -6,7 +6,7 @@ import { reservationServiceKafkaConfig } from "apps/booking-service/src/app/infr
 import { AppModule } from "apps/booking-service/src/app/infra/di/app.module";
 import { LoggingInterceptor } from 'observability'
 
-async function startrandomateApp() {
+async function startApp() {
   const httpPort = Number(process.env.RESERVATIONSERVICE_HTTP_PORT ?? 3001);
 
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -41,7 +41,7 @@ async function startrandomateApp() {
   await app.listen(httpPort);
   const url = await app.getUrl();
   Logger.log({
-    message: `[RandomateApp] HTTP listening: ${url}  |  Swagger: ${url}/docs`,
+    message: `[App] HTTP listening: ${url}  |  Swagger: ${url}/docs`,
   });
 }
 
@@ -51,7 +51,7 @@ async function bootstrap() {
 
 
   //read assumes entities defined in DB
-  await startrandomateApp();
+  await startApp();
 
   // Graceful shutdown on signals
   const shutdown = async (signal: string) => {

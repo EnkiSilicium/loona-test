@@ -13,12 +13,12 @@ ENV NODE_OPTIONS=--enable-source-maps
 
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy compiled artifacts produced by `nx build reservation-service`
-COPY dist/apps/reservation-service ./dist/apps/reservation-service
+# Copy compiled artifacts produced by `nx build booking-service`
+COPY dist/apps/booking-service ./dist/apps/booking-service
 COPY dist/libs ./dist/libs
 
 COPY package.json ./
-USER node
+USER root
 EXPOSE 3001
 
-CMD ["node", "dist/apps/reservation-service/main.js"]
+CMD ["node", "dist/apps/booking-service/main.js"]

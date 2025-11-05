@@ -8,7 +8,7 @@ import { apiServiceTypeOrmOptions } from 'apps/api-service/src/app/infra/config/
 import { BookingRequestRepository } from 'apps/api-service/src/app/infra/persistence/repository/booking-request.repository';
 import { ReservationConsumer } from 'apps/booking-service/src/app/adapters/inbound/reservation.consumer';
 import { RestaurantAdminController } from 'apps/booking-service/src/app/adapters/inbound/restaraunt-admin.controller';
-import { KafkaMessageProducer } from 'apps/booking-service/src/app/adapters/outbound/booking-service.producer';
+import { KafkaMessageProducer } from 'apps/booking-service/src/app/adapters/outbound/reservation-service.producer';
 import { RestaurantAdminService } from 'apps/booking-service/src/app/application/restaraunt-admin-service';
 import { TableBookingService } from 'apps/booking-service/src/app/application/table-booking.service';
 import { reservationServiceKafkaConfig } from 'apps/booking-service/src/app/infra/config/kafka.config';

@@ -86,14 +86,14 @@ export function setupSwagger(
     const doc = SwaggerModule.createDocument(app, cfg, { deepScanRoutes: true });
 
     // Optional: emit OpenAPI JSON to disk
-    if (/*process.argv.includes('--emit-openapi')*/ true) {
-        const outDir = join(process.cwd(), 'openapi');
-        mkdirSync(outDir, { recursive: true });
-        writeFileSync(
-            join(outDir, `${title}.${version}.json`),
-            JSON.stringify(doc, null, 2),
-        );
-    }
+    // if (process.argv.includes('--emit-openapi')) {
+    //     const outDir = join(process.cwd(), 'openapi');
+    //     mkdirSync(outDir, { recursive: true });
+    //     writeFileSync(
+    //         join(outDir, `${title}.${version}.json`),
+    //         JSON.stringify(doc, null, 2),
+    //     );
+    // }
 
     const bundled = extractBoolEnv(process.env.BUNDLED_SWAGGER);
 

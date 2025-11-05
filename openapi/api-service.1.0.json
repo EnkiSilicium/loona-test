@@ -1,0 +1,174 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/booking": {
+      "post": {
+        "operationId": "ApiServiceController_postBooking",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostBookingRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostBookingResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a booking request",
+        "tags": [
+          "booking"
+        ]
+      },
+      "get": {
+        "operationId": "ApiServiceController_getBooking",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "required": true,
+            "in": "query",
+            "description": "Public booking identifier (UUID string). In this model it equals the bookingRequestId.",
+            "schema": {
+              "format": "uuid",
+              "example": "9f2a3b7e-7d3a-4c15-9e4c-4f1a2b3c4d5e",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get booking snapshot by bookingId",
+        "tags": [
+          "booking"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "api-service",
+    "description": "",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Paste: Bearer <your-JWT>"
+      }
+    },
+    "schemas": {
+      "PostBookingRequestDto": {
+        "type": "object",
+        "properties": {
+          "restarauntId": {
+            "type": "string",
+            "description": "Restaurant identifier (UUID string).",
+            "format": "uuid",
+            "example": "2f7a9e0b-2c10-4f5e-8a2c-3b5d8f5e9a11"
+          },
+          "bookAt": {
+            "type": "string",
+            "description": "ISO-8601 timestamp at whole-hour granularity (e.g., 18:00, 19:00...). Must be in the future.",
+            "format": "date-time",
+            "example": "2025-11-04T18:00:00.000Z"
+          },
+          "amountOfGuests": {
+            "type": "number",
+            "description": "Number of guests (integer ≥ 1).",
+            "example": 2,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "restarauntId",
+          "bookAt",
+          "amountOfGuests"
+        ]
+      },
+      "PostBookingResponseDto": {
+        "type": "object",
+        "properties": {
+          "bookingRequestId": {
+            "type": "string",
+            "description": "Booking Request identifier (UUID string).",
+            "format": "uuid",
+            "example": "9f2a3b7e-7d3a-4c15-9e4c-4f1a2b3c4d5e"
+          }
+        },
+        "required": [
+          "bookingRequestId"
+        ]
+      },
+      "GetBookingResponseDto": {
+        "type": "object",
+        "properties": {
+          "bookingRequestId": {
+            "type": "string",
+            "description": "Public booking identifier (UUID string). In this model it equals the bookingRequestId.",
+            "format": "uuid",
+            "example": "9f2a3b7e-7d3a-4c15-9e4c-4f1a2b3c4d5e"
+          },
+          "restarauntId": {
+            "type": "string",
+            "description": "Restaurant identifier (UUID string).",
+            "format": "uuid",
+            "example": "2f7a9e0b-2c10-4f5e-8a2c-3b5d8f5e9a11"
+          },
+          "bookAt": {
+            "type": "string",
+            "description": "ISO-8601 timestamp at whole-hour granularity (e.g., 18:00, 19:00...).",
+            "format": "date-time",
+            "example": "2025-11-04T18:00:00.000Z"
+          },
+          "amountOfGuests": {
+            "type": "number",
+            "description": "Number of guests (integer ≥ 1).",
+            "example": 2,
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "description": "Status string. Allowed values (documented only): \"CREATED\", \"CONFIRMED\", \"REJECTED\".",
+            "example": "CREATED"
+          }
+        },
+        "required": [
+          "bookingRequestId",
+          "restarauntId",
+          "bookAt",
+          "amountOfGuests",
+          "status"
+        ]
+      }
+    }
+  }
+}

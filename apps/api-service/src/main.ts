@@ -6,7 +6,7 @@ import { apiServiceKafkaConfig } from "apps/api-service/src/app/infra/config/kaf
 import { AppModule } from "apps/api-service/src/app/infra/di/app.module";
 import { LoggingInterceptor } from 'observability'
 
-async function startrandomateApp() {
+async function startApp() {
   const httpPort = Number(process.env.APISERVICE_HTTP_PORT ?? 3002);
 
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -45,7 +45,7 @@ async function startrandomateApp() {
   await app.listen(httpPort);
   const url = await app.getUrl();
   Logger.log({
-    message: `[RandomateApp] HTTP listening: ${url}  |  Swagger: ${url}/docs`,
+    message: `[App] HTTP listening: ${url}  |  Swagger: ${url}/docs`,
   });
 }
 
@@ -55,7 +55,7 @@ async function bootstrap() {
 
 
   //read assumes entities defined in DB
-  await startrandomateApp();
+  await startApp();
 
   // Graceful shutdown on signals
   const shutdown = async (signal: string) => {
