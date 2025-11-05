@@ -1,0 +1,24 @@
+# syntax=docker/dockerfile:1
+
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=--enable-source-maps
+
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy compiled artifacts produced by `nx build reservation-service`
+COPY dist/apps/reservation-service ./dist/apps/reservation-service
+COPY dist/libs ./dist/libs
+
+COPY package.json ./
+USER node
+EXPOSE 3001
+
+CMD ["node", "dist/apps/reservation-service/main.js"]
